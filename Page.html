@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <form id="analysisForm">
+      Minimum Length of Word: <input type="number" name="minLength" value="4"><br>
+      Minimum Occurrences: <input type="number" name="minOccurrences" value="4"><br>
+      <button type="button" onclick="submitForm()">Analyze</button>
+      <button type="button" onclick="removeHighlights()">Remove Highlights</button>
+    </form>
+
+    <script>
+      function submitForm() {
+        var form = document.getElementById('analysisForm');
+        var minLength = parseInt(form.minLength.value);
+        var minOccurrences = parseInt(form.minOccurrences.value);
+
+        google.script.run.withSuccessHandler(showResults)
+                         .customWordAnalysis(minLength, minOccurrences);
+      }
+
+      function showResults(results) {
+        var ui = DocumentApp.getUi();
+        var message = results.join("\n");
+        ui.alert('Custom Analysis Results', message, ui.ButtonSet.OK);
+      }
+    </script>
+  </body>
+</html>
